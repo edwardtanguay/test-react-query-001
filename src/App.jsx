@@ -1,12 +1,11 @@
 import './App.scss';
 import { useQuery } from 'react-query';
 import axios from 'axios';
-/// sdfkjdkfj
 
 const techBooksUrl = 'http://localhost:4222/techBooks';
 
 function App() {
-	const { data:techBooks, error, isLoading } = useQuery(
+	const __techBooks = useQuery(
 		'techBooks',
 		async () => (await axios.get(techBooksUrl)).data
 	);
@@ -15,16 +14,16 @@ function App() {
 		<div className="App">
 			<h1>Info Site</h1>
 
-			{error && (
-				<div className="error">Error: {error.message}</div>
+			{__techBooks.error && (
+				<div className="error">Error: {__techBooks.error.message}</div>
 			)}
-			{isLoading && (
+			{__techBooks.isLoading && (
 				<div className="isLoading">Loading...</div>
 			)}
 
-			{!error && !isLoading && techBooks.length > 0 && (
+			{__techBooks.status === 'success' && (
 				<div className="content">
-					{techBooks.map((techBook, index) => {
+					{__techBooks.data.map((techBook, index) => {
 						return (
 							<div key={index} className="techBook">
 								<div className="title">{techBook.title}</div>
@@ -35,7 +34,7 @@ function App() {
 				</div>
 			)}
 			<pre>
-						{JSON.stringify(techBooks, null, 2)}
+						{JSON.stringify(__techBooks, null, 2)}
 					</pre>
 		</div>
 	);
