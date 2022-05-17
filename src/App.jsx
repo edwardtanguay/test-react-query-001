@@ -5,7 +5,7 @@ import axios from 'axios';
 const techBooksUrl = 'http://localhost:4222/techBooks';
 
 function App() {
-	const { data, error, isLoading } = useQuery(
+	const { data: techBooks, error, isLoading } = useQuery(
 		'techBooks',
 		async () => await axios.get(techBooksUrl)
 	);
@@ -21,9 +21,9 @@ function App() {
 				<div className="isLoading">Loading...</div>
 			)}
 
-			{!error && !isLoading && data.data.length > 0 && (
+			{!error && !isLoading && techBooks.data.length > 0 && (
 				<div className="content">
-					{data.data.map((techBook, index) => {
+					{techBooks.data.map((techBook, index) => {
 						return (
 							<div key={index} className="techBook">
 								<div className="title">{techBook.title}</div>
@@ -31,7 +31,7 @@ function App() {
 						)
 					})}
 					<pre>
-						{JSON.stringify(data, null, 2)}
+						{JSON.stringify(techBooks, null, 2)}
 					</pre>
 
 				</div>
