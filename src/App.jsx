@@ -4,11 +4,10 @@ import axios from 'axios';
 
 const techBooksUrl = 'http://localhost:4222/techBooks';
 
+const getTechBooks = async () => (await axios.get(techBooksUrl)).data;
+
 function App() {
-	const __techBooks = useQuery(
-		'techBooks',
-		async () => (await axios.get(techBooksUrl)).data
-	);
+	const __techBooks = useQuery('techBooks', getTechBooks);
 
 	return (
 		<div className="App">
@@ -28,14 +27,11 @@ function App() {
 							<div key={index} className="techBook">
 								<div className="title">{techBook.title}</div>
 							</div>
-						)
+						);
 					})}
-
 				</div>
 			)}
-			<pre>
-						{JSON.stringify(__techBooks, null, 2)}
-					</pre>
+			<pre>{JSON.stringify(__techBooks, null, 2)}</pre>
 		</div>
 	);
 }
