@@ -23,9 +23,17 @@ function App() {
 
 			{!error && !isLoading && data.data.length > 0 && (
 				<div className="content">
+					{data.data.map((techBook, index) => {
+						return (
+							<div key={index} className="techBook">
+								<div className="title">{techBook.title}</div>
+							</div>
+						)
+					})}
 					<pre>
 						{JSON.stringify(data, null, 2)}
 					</pre>
+
 				</div>
 			)}
 		</div>
